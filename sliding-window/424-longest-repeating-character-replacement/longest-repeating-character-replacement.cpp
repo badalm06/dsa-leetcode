@@ -15,6 +15,7 @@ public:
             // shrink if more than k replacement needed
             while((right-left+1)-maxFreq > k){
                 st[s[left]]--;
+                if(st[s[left]] == 0) st.erase(s[left]);
                 left++;
             }
             // update answer
