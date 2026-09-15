@@ -9,19 +9,25 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
+
+ // Simpler approach
 class Solution {
 public:
-    bool fun(TreeNode* root, long long low, long long high) {
-        if(root == NULL) return true;
-        if(root -> val <= low || root -> val >= high) return false;
+    TreeNode* prev = NULL;
+    bool ans = true;
 
-        bool left = fun(root -> left, low, root -> val);
-        bool right = fun(root -> right, root -> val, high);
-
-        if(left==true && right==true) return true;
-        return false;
+    void fun(TreeNode* root) {
+        if(root == NULL) return;
+        fun(root -> left);
+        if(prev==NULL) prev = root;
+        else {
+            if(root -> val <= prev -> val) ans = false;
+            prev = root;
+        }
+        fun(root -> right);
     }
     bool isValidBST(TreeNode* root) {
-        return fun(root, LLONG_MIN, LLONG_MAX);
+        fun(root);
+        return ans;
     }
 };
