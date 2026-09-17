@@ -13,18 +13,17 @@ class Solution {
 public:
     unordered_map<int,int> mp;
     int idx;
+
     TreeNode* fun(vector<int>& postorder, int low, int high) {
         if(low>high) return NULL;
 
         TreeNode* node = new TreeNode(postorder[idx]);
         idx--;
-
         int id = mp[node -> val];
-        node -> right = fun(postorder, id+1, high);
-        node -> left = fun(postorder, low, id-1);
-        
-        return node;
+        node -> right = fun(postorder,id+1,high);
+        node -> left = fun(postorder,low,id-1);
 
+        return node;
     }
     TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder) {
         idx = postorder.size()-1;
